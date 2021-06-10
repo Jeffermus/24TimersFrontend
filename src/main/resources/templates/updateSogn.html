@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<body>
+<div align="center">
+
+    <!-- === CREATE SOGN === -->
+    <form class="contact w-50" action="" method="post" id="updateSognForm">
+        <div class="valid" id="notFilled"></div>
+
+        <h3 class="text-center mb-2">Update Sogn</h3>
+        <br>
+
+        <!--            SOGNID -->
+
+            <input class="form-control" type="number" id="sognid"  hidden >
+
+
+        <!--            SOGNNAVN -->
+        <div class="form-group ml-5 mr-5">
+            <label for="sognenavn">Sogne Navn</label>
+            <input class="form-control" type="text" id="sognenavn"  placeholder="Sogne Navn">
+        </div>
+
+        <!--            SOGNEKODE-->
+        <div class="form-group ml-5 mr-5">
+            <label for="sognekode">Sogne Kode</label>
+            <input class="form-control" type="text" id="sognekode"  placeholder="Sogne Kode">
+        </div>
+
+        <!--              SUBMIT -->
+        <button  type="submit" id="submitButton" class="w-50 btn form-button ml-5 mr-5">Update Sogn</button>
+
+    </form>
+</div>
+</body>
+<script src="/js/updateSogn.js"></script>
+</html>
