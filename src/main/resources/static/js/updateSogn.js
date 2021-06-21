@@ -2,6 +2,10 @@ const updateSognForm = document.getElementById('updateSognForm');
 const sognekode = document.getElementById('sognekode');
 const sognenavn = document.getElementById('sognenavn');
 const sognid = document.getElementById('sognid');
+const nedlukning = document.getElementById('nedlukning');
+const smittetryk = document.getElementById('smittetryk');
+
+// document.getElementById er et objekt
 
 updateSognForm.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -42,6 +46,8 @@ function insertSognInformationsData(data){
     sognid.value = data.id;
     sognenavn.value = data.sognenavn;
     sognekode.value = data.sognekode;
+    smittetryk.value = data.smittetryk;
+    console.log(smittetryk)
     console.log(data.sognenavn)
     console.log(data.sognekode)
 }
@@ -50,7 +56,14 @@ function insertSognInformationsData(data){
 //======== FETCH UPDATE SOGN ========
 
 function UpdateSognFetch(){
-
+    let lukket;
+    if(nedlukning.value == ""){
+         lukket = 0;
+    }else{
+         lukket = 1;
+    }
+    console.log(lukket)
+    console.log(nedlukning.value)
     const url = 'http://localhost:5002/edit/sogn'
     const request = {
         method: 'PUT',
@@ -58,11 +71,14 @@ function UpdateSognFetch(){
             "id": sognid.value,
             "sognekode": sognekode.value,
             "sognenavn": sognenavn.value,
+            "lukket"    : lukket,
+            "smittetryk": smittetryk.value,
+            "nedlukning": nedlukning.value,
             "kommune": {
                 "id": 1,
                 "navn": "test",
                 "smittetryk": 49,
-                "nedlukning": 1609455600000
+
             }
         }),
         headers: {

@@ -1,4 +1,3 @@
-
 //    ==================================================== GET KOMMUNE ================================================
 
 const myUrl = `http://localhost:5002/select/kommune`;
@@ -44,14 +43,10 @@ function fillTbody(item, index) {
 
     // === CREATE TH ===
     let th2 = document.createElement('th');
-    th2.textContent = item.smittetryk;
+    getSmittelist(item.id).then(sum => {
+        th2.textContent = sum;
+    })
     tr.appendChild(th2);
-
-    // === CREATE TH ===
-    let th3 = document.createElement('th');
-    th3.textContent = item.nedlukning;
-    tr.appendChild(th3);
-
 }
 
 
@@ -93,6 +88,25 @@ function fillTbodySognInfo(item, index) {
     th2.textContent = item.sognekode;
     tr.appendChild(th2);
 
+    // === CREATE TH ===
+    let th3 = document.createElement('th');
+    th3.textContent = item.nedlukning;
+    tr.appendChild(th3);
+
+    // === CREATE TD ===
+    let td = document.createElement('td');
+    tr.appendChild(td);
+
+    // === CREATE INPUT ===
+    let input = document.createElement('input')
+    input.setAttribute('type', 'checkbox');
+    if(item.lukket == 1){
+        input.checked = true;
+    }
+
+    input.disabled = true;
+    td.appendChild(input);
+
     // === CREATE a ===
     let a = document.createElement('a');
     a.setAttribute('class', 'mt-3 w-10 btn btn-info');
@@ -107,6 +121,36 @@ function fillTbodySognInfo(item, index) {
     a1.textContent = "Slet Sogn";
     tr.appendChild(a1);
 }
+
+//    ==================================================== GET LISTE AF SMITTETRYK =========================================
+
+    function getSmittelist(id){
+
+    let url = `http://localhost:5002/select/sogn/smittelist/${id}`
+
+    let requestOptions = {
+        'content-type' : 'applikationjson',
+        method : 'GET',
+        redirect : 'follow'
+    }
+    return fetch(url, requestOptions)
+        .then(response => response.json())
+            .then(data =>{
+                let a = 0;
+                for(let i = 0; i < data.length; i++){
+                    a += data[i].smittetryk;
+                }
+                let sum = a / data.length;
+                return sum;
+            })
+        .catch(error => {
+            console.log(error);
+        })
+
+}
+
+
+//    ==================================================== DELETE SOGN WITH ID =========================================
 
 function sletSogn(id){
     if (confirm("Vil Du Fjerne Sogn?")){
